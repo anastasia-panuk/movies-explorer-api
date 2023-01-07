@@ -11,8 +11,6 @@ const {
   UNIQUE_ERR,
 } = require('../utils/constants/constants');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-
 module.exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
@@ -39,9 +37,10 @@ module.exports.createUser = (req, res, next) => {
 
 module.exports.login = (req, res, next) => User.findUserByCredentials(req.body)
   .then((user) => {
+    const { JWT_SECRET } = req.app.get('config');
     const token = jwt.sign(
       { _id: user._id },
-      NODE_ENV ? JWT_SECRET : 'dev-secret',
+      JWT_SECRET,
       { expiresIn: '7d' },
     );
     res.send({ token });

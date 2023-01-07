@@ -1,6 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+require('dotenv').config();
 const { errors } = require('celebrate');
+const cors = require('cors');
 const {
   INTERNAL_SERVER_ERR,
 } = require('./utils/constants/constants');
@@ -13,11 +16,22 @@ const {
 const { bodyUser, bodyAuth } = require('./validators/user');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-const { PORT = 3002, DB_CONN = 'mongodb://localhost:27017/diploma' } = process.env;
+const { PORT = 3002, DB_CONN = 'mongodb://localhost:27017/diploma', NODE_ENV } = process.env;
 
 const app = express();
 
+const config = dotenv.config({
+  path: NODE_ENV === 'production' ? '.env' : '.env.common',
+}).parsed;
+
+app.set('config', config);
+
 app.use(express.json());
+
+app.use(cors({
+  origin: '*',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 mongoose.connect(DB_CONN);
 
