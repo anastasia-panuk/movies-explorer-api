@@ -21,7 +21,7 @@ const { PORT = 3002, DB_CONN = 'mongodb://localhost:27017/diploma', NODE_ENV } =
 const app = express();
 
 const config = dotenv.config({
-  path: NODE_ENV === 'production' ? '.env' : '.env.common',
+  path: NODE_ENV === 'production' ? '.env' : '.env.common.env',
 }).parsed;
 
 app.set('config', config);
