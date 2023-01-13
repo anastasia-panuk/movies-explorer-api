@@ -24,18 +24,30 @@ const config = dotenv.config({
   path: NODE_ENV === 'production' ? '.env' : '.env.common.env',
 }).parsed;
 
-app.set('config', config);
-
-app.use(express.json());
-
-app.use(cors({
-  origin: '*',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+const allowedURL = [
+  'https://panuk.movie-explorer.nomoredomains.club',
+  'https://api.panuk.movie-explorer.nomoredomains.club',
+  'http://localhost:3002',
+];
 
 mongoose.connect(DB_CONN);
 
+app.set('config', config);
+
+app.use(cors({
+  origin: allowedURL,
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+
+app.use(express.json());
+
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
 
 app.post('/signin', bodyAuth, login);
 app.post('/signup', bodyUser, createUser);
