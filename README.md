@@ -1,6 +1,4 @@
-[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)
-# Проект Mesto фронтенд + бэкенд
-
+# Дипломный проект - бэкенд
 
 ## Директории
 
@@ -10,10 +8,14 @@
   
 Остальные директории вспомогательные, создаются при необходимости разработчиком
 
-## Запуск проекта
+## Запуск проекта локально
 
 `npm run start` — запускает сервер   
 `npm run dev` — запускает сервер с hot-reload
+
+## Домен
+
+https://api.panuk.movie-explorer.nomoredomains.club
 
 ## Ссылка на репозиторий
 https://github.com/anastasia-panuk/express-mesto-gha
