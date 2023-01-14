@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const AuthorizationError = require('../errors/AuthorizationError');
+const {
+  EMAIL_VALIDATION_ERR_MESSAGE,
+  AUTH_EMAIL_OR_PASSWORD_ERR_MESSAGE,
+} = require('../utils/constants/constants');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -16,7 +20,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate: {
       validator: (v) => validator.isEmail(v),
-      message: () => 'Указан некорректный адрес почты',
+      message: () => EMAIL_VALIDATION_ERR_MESSAGE,
     },
   },
   password: {
@@ -32,12 +36,12 @@ const userSchema = new mongoose.Schema({
         .select('+password')
         .then((userData) => {
           if (!userData) {
-            throw new AuthorizationError('Почта или пароль неверны');
+            throw new AuthorizationError(AUTH_EMAIL_OR_PASSWORD_ERR_MESSAGE);
           }
           return bcrypt.compare(password, userData.password)
             .then((isSuccess) => {
               if (!isSuccess) {
-                throw new AuthorizationError('Почта или пароль неверны');
+                throw new AuthorizationError(AUTH_EMAIL_OR_PASSWORD_ERR_MESSAGE);
               }
 
               const {

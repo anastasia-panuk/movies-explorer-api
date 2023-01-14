@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
 
-const { urlRegExp } = require('../utils/constants/constants');
+const {
+  URL_VALIDATION_ERR_MESSAGE,
+  urlRegExp,
+} = require('../utils/constants/constants');
 
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
   },
   director: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
   },
   duration: {
     type: Number,
@@ -26,15 +25,13 @@ const movieSchema = new mongoose.Schema({
   description: {
     type: String,
     required: true,
-    minlength: 2,
-    maxlength: 30,
   },
   image: {
     type: String,
     required: true,
     validate: {
       validator: (v) => (urlRegExp).test(v),
-      message: () => 'Некорректный формат ссылки',
+      message: () => URL_VALIDATION_ERR_MESSAGE,
     },
   },
   trailerLink: {
@@ -42,7 +39,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => (urlRegExp).test(v),
-      message: () => 'Некорректный формат ссылки',
+      message: () => URL_VALIDATION_ERR_MESSAGE,
     },
   },
   thumbnail: {
@@ -50,7 +47,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: (v) => (urlRegExp).test(v),
-      message: () => 'Некорректный формат ссылки',
+      message: () => URL_VALIDATION_ERR_MESSAGE,
     },
   },
   owner: {
