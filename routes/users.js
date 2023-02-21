@@ -7,7 +7,7 @@ const {
   bodyMe,
 } = require('../validators/user');
 
-router.patch('/me', bodyMe, updateUser);
 router.get('/me', getMe);
+router.patch('/me', bodyMe, updateUser);
 
 module.exports = router;

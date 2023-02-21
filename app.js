@@ -18,18 +18,18 @@ const config = dotenv.config({
   path: NODE_ENV === 'production' ? '.env' : '.env.common.env',
 }).parsed;
 
-const allowedURL = [
-  'https://panuk.movie-explorer.nomoredomains.club',
-  'https://api.panuk.movie-explorer.nomoredomains.club',
-  'http://localhost:3002',
-];
+// const allowedURL = [
+//   'https://panuk.movie-explorer.nomoredomains.club',
+//   'https://api.panuk.movie-explorer.nomoredomains.club',
+//   'http://localhost:3002',
+// ];
 
 mongoose.connect(DB_CONN);
 
 app.set('config', config);
 
 app.use(cors({
-  origin: allowedURL,
+  origin: '*',
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
